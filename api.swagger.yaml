@@ -1,0 +1,49 @@
+swagger: "2.0"
+info:
+  description: database course project
+  title: meta data manage sys
+  version: 1.0.0
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  key:
+    type: basic
+schemes:
+  - http
+paths:
+
+  /user:
+    get:
+      description: "get user by username"
+      tags:
+        - user
+      security:
+        - key: []
+      parameters:
+        - name: user_name
+          in: query
+          type: string
+      responses:
+        200:
+          description: "ok"
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/user"
+    post:
+      description: "registry user"
+      tags:
+        - user
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/user"
+      responses:
+        200:
+          description: "ok"
+
+definitions:
+  authority: !include gen/authority/authority.swagger.json

@@ -1,0 +1,533 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "title": "authority/authority.proto",
+    "version": "version not set"
+  },
+  "paths": {
+    "/project": {
+      "post": {
+        "tags": [
+          "Ops"
+        ],
+        "operationId": "Ops_CreateProject",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/projectCreateProjectReq"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelCommonResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ops"
+        ],
+        "operationId": "Ops_DeleteProject",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "project_name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelCommonResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        }
+      }
+    },
+    "/project/service": {
+      "get": {
+        "tags": [
+          "Ops"
+        ],
+        "operationId": "Ops_ListService",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "project_name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/projectListServiceResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Ops"
+        ],
+        "operationId": "Ops_SetService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelCommonResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Ops"
+        ],
+        "operationId": "Ops_DeleteService",
+        "parameters": [
+          {
+            "type": "string",
+            "name": "project_name",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "name": "service_name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelCommonResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "DeleteAuthoritiesRespFailMessages": {
+      "type": "object",
+      "properties": {
+        "authority": {
+          "$ref": "#/definitions/modelAuthority"
+        },
+        "error": {
+          "$ref": "#/definitions/modelError"
+        }
+      }
+    },
+    "authorityAuthorities": {
+      "type": "object",
+      "properties": {
+        "authorities": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelAuthority"
+          }
+        }
+      }
+    },
+    "authorityDeleteAuthoritiesResp": {
+      "type": "object",
+      "properties": {
+        "fail_messages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/DeleteAuthoritiesRespFailMessages"
+          }
+        }
+      }
+    },
+    "authorityListAuthoritiesResp": {
+      "type": "object",
+      "properties": {
+        "authorities": {
+          "$ref": "#/definitions/authorityAuthorities"
+        },
+        "error": {
+          "$ref": "#/definitions/modelError"
+        }
+      }
+    },
+    "gatewayruntimeError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        },
+        "error": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "identityListPublicTokenResp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        },
+        "public_tokens": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelAPIToken"
+          }
+        }
+      }
+    },
+    "identityLoginResp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        },
+        "identity": {
+          "$ref": "#/definitions/modelIdentity"
+        },
+        "token": {
+          "$ref": "#/definitions/modelToken"
+        }
+      }
+    },
+    "identityVerifyResp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        },
+        "identity": {
+          "$ref": "#/definitions/modelIdentity"
+        },
+        "token_type": {
+          "$ref": "#/definitions/modelTokenType"
+        }
+      }
+    },
+    "modelAPIToken": {
+      "type": "object",
+      "properties": {
+        "allowed_actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelActions"
+          }
+        },
+        "deadline_timestamp": {
+          "type": "string",
+          "format": "int64"
+        },
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "message": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "token": {
+          "$ref": "#/definitions/modelToken"
+        }
+      }
+    },
+    "modelActions": {
+      "type": "string",
+      "default": "unkonwn",
+      "enum": [
+        "unkonwn",
+        "get_info",
+        "manage_members",
+        "manage_service"
+      ]
+    },
+    "modelAuthority": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string"
+        },
+        "identity": {
+          "$ref": "#/definitions/modelIdentity"
+        },
+        "resource": {
+          "$ref": "#/definitions/modelResource"
+        }
+      }
+    },
+    "modelCommonResp": {
+      "description": "no other return value.",
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        }
+      }
+    },
+    "modelEnvironmentVariable": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "modelError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "modelIdentity": {
+      "description": "record user's identity information.",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "modelImage": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "modelPod": {
+      "type": "object",
+      "properties": {
+        "age": {
+          "type": "string",
+          "format": "int64"
+        },
+        "machine_name": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      }
+    },
+    "modelPort": {
+      "description": "Port for container.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "modelProject": {
+      "type": "object",
+      "properties": {
+        "describe": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "modelResource": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      }
+    },
+    "modelService": {
+      "type": "object",
+      "properties": {
+        "describe": {
+          "type": "string"
+        },
+        "envs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelEnvironmentVariable"
+          }
+        },
+        "expose_ports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelPort"
+          }
+        },
+        "image": {
+          "$ref": "#/definitions/modelImage"
+        },
+        "name": {
+          "type": "string"
+        },
+        "replica": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "modelToken": {
+      "description": "used to access browser/api.",
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        },
+        "type": {
+          "$ref": "#/definitions/modelTokenType"
+        }
+      }
+    },
+    "modelTokenType": {
+      "type": "string",
+      "default": "session",
+      "enum": [
+        "session",
+        "private",
+        "public"
+      ]
+    },
+    "projectCreateProjectReq": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "$ref": "#/definitions/modelProject"
+        }
+      }
+    },
+    "projectGetServiceResp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        },
+        "service": {
+          "$ref": "#/definitions/modelService"
+        }
+      }
+    },
+    "projectListPodsResp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        },
+        "pods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelPod"
+          }
+        }
+      }
+    },
+    "projectListServiceResp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        },
+        "service": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelService"
+          }
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    }
+  }
+}

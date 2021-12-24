@@ -1,0 +1,24 @@
+type: google.api.service
+config_version: 3
+
+http:
+  rules:
+    # project
+    - selector: project.Ops.CreateProject
+      post: /project
+      tags: "project"
+      body: "*"
+    - selector: project.Ops.DeleteProject
+      delete: /project
+    # service
+    - selector: project.Ops.SetService
+      post: /project/service
+      security_requirement:
+        key: "ApiKeyAuth"
+        value: []
+    - selector: project.Ops.GetService
+      get: /project/service
+    - selector: project.Ops.ListService
+      get: /project/service
+    - selector: project.Ops.DeleteService
+      delete: /project/service

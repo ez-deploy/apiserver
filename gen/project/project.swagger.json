@@ -1,0 +1,355 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "project/project.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/project": {
+      "delete": {
+        "operationId": "Ops_DeleteProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelCommonResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "project_name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Ops"
+        ]
+      },
+      "post": {
+        "operationId": "Ops_CreateProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelCommonResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/projectCreateProjectReq"
+            }
+          }
+        ],
+        "tags": [
+          "Ops"
+        ]
+      }
+    },
+    "/project/service": {
+      "get": {
+        "operationId": "Ops_ListService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/projectListServiceResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "project_name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Ops"
+        ]
+      },
+      "delete": {
+        "operationId": "Ops_DeleteService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelCommonResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "project_name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "service_name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "Ops"
+        ]
+      },
+      "post": {
+        "operationId": "Ops_SetService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/modelCommonResp"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        },
+        "tags": [
+          "Ops"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "gatewayruntimeError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "string"
+        },
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "modelCommonResp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        }
+      },
+      "description": "no other return value."
+    },
+    "modelEnvironmentVariable": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "modelError": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "type": "boolean"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "modelImage": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      }
+    },
+    "modelPod": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "age": {
+          "type": "string",
+          "format": "int64"
+        },
+        "machine_name": {
+          "type": "string"
+        }
+      }
+    },
+    "modelPort": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "description": "Port for container."
+    },
+    "modelProject": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "describe": {
+          "type": "string"
+        }
+      }
+    },
+    "modelService": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "describe": {
+          "type": "string"
+        },
+        "replica": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "image": {
+          "$ref": "#/definitions/modelImage"
+        },
+        "expose_ports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelPort"
+          }
+        },
+        "envs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelEnvironmentVariable"
+          }
+        }
+      }
+    },
+    "projectCreateProjectReq": {
+      "type": "object",
+      "properties": {
+        "project": {
+          "$ref": "#/definitions/modelProject"
+        }
+      }
+    },
+    "projectGetServiceResp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        },
+        "service": {
+          "$ref": "#/definitions/modelService"
+        }
+      }
+    },
+    "projectListPodsResp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        },
+        "pods": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelPod"
+          }
+        }
+      }
+    },
+    "projectListServiceResp": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "$ref": "#/definitions/modelError"
+        },
+        "service": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/modelService"
+          }
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "type_url": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string",
+          "format": "byte"
+        }
+      }
+    }
+  }
+}
