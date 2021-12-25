@@ -1,0 +1,82 @@
+swagger: "2.0"
+info:
+  description: apiserver
+  title: ez-deploy apiserver.
+  version: 1.0.0
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  key:
+    type: apiKey
+    in: header
+    name: X-EZDEOPLY-APIKEY
+security:
+  - key: []
+schemes:
+  - http
+paths:
+  /user/login:
+    post:
+      tags:
+        - IdentityOps
+      security: []
+      summary: Login by email and password.
+      operationId: IdentityOps_Login
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/identityLoginReq'
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/identityLoginResp'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/gatewayruntimeError'
+  /user/register:
+    post:
+      tags:
+        - IdentityOps
+      security: []
+      summary: Register by email and password.
+      operationId: IdentityOps_Register
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/identityRegisterReq'
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/modelCommonResp'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/gatewayruntimeError'
+  /user/verify:
+    get:
+      tags:
+        - IdentityOps
+      summary: Verify by session_token.
+      operationId: IdentityOps_Verify
+      parameters:
+        - type: string
+          name: token
+          in: query
+      responses:
+        "200":
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/identityVerifyResp'
+        default:
+          description: An unexpected error response.
+          schema:
+            $ref: '#/definitions/gatewayruntimeError'

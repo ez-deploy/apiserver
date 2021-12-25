@@ -1,19 +1,13 @@
-package main
+// +build tools
+
+package tools
 
 import (
-	"context"
-
-	rkboot "github.com/rookie-ninja/rk-boot"
+_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway"
+_ "github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2"
+_ "google.golang.org/grpc/cmd/protoc-gen-go-grpc"
+_ "google.golang.org/protobuf/cmd/protoc-gen-go"
 )
-
 // Application entrance.
 func main() {
-	// Create a new boot instance.
-	boot := rkboot.NewBoot()
-
-	// Bootstrap
-	boot.Bootstrap(context.Background())
-
-	// Wait for shutdown sig
-	boot.WaitForShutdownSig(context.Background())
 }

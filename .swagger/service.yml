@@ -1,0 +1,58 @@
+type: google.api.service
+config_version: 3
+
+http:
+  rules:
+    # authority.
+    - selector: authority.AuthorityOps.SetAuthorities
+      post: /authority
+      body: "*"
+    - selector: authority.AuthorityOps.ListAuthoritiesByIdentity
+      get: /authority/identity
+    - selector: authority.AuthorityOps.ListAuthoritiesByResource
+      get: /authority/resource
+    - selector: authority.AuthorityOps.DeleteAuthorities
+      delete: /authority
+      body: "*"
+
+    # identity.
+    - selector: identity.IdentityOps.ReGeneratePrivateToken
+      post: /user/token/private
+    - selector: identity.IdentityOps.GetPrivateToken
+      get: /user/token/private
+    - selector: identity.IdentityOps.GeneratePublicToken
+      post: /user/token/public
+      body: "*"
+    - selector: identity.IdentityOps.ListPublicToken
+      get: /user/token/public
+    - selector: identity.IdentityOps.DeletePublicToken
+      delete: /user/token/public
+      body: "*"
+
+    # identity ignore.
+    - selector: identity.IdentityOps.Register
+      post: /user/register
+      body: "*"
+    - selector: identity.IdentityOps.Login
+      post: /user/login
+      body: "*"
+    - selector: identity.IdentityOps.Verify
+      get: /user/verify
+
+    # project.
+    - selector: project.ProjectOps.CreateProject
+      post: /project
+      body: "*"
+    - selector: project.ProjectOps.DeleteProject
+      delete: /project
+    - selector: project.ProjectOps.SetService
+      post: /project/service
+      body: "*"
+    - selector: project.ProjectOps.GetService
+      get: /project/service/get
+    - selector: project.ProjectOps.ListService
+      get: /project/service/list
+    - selector: project.ProjectOps.DeleteService
+      delete: /project/service
+    - selector: project.ProjectOps.ListPods
+      get: /project/service/pod
