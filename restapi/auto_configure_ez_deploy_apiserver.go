@@ -86,6 +86,8 @@ type ProjectOpsHandler interface {
 	ProjectOpsDeleteProject(params project_ops.ProjectOpsDeleteProjectParams, principal *models.IdentityVerifyResp) middleware.Responder
 	ProjectOpsDeleteService(params project_ops.ProjectOpsDeleteServiceParams, principal *models.IdentityVerifyResp) middleware.Responder
 	ProjectOpsGetService(params project_ops.ProjectOpsGetServiceParams, principal *models.IdentityVerifyResp) middleware.Responder
+	/* ProjectOpsList list all visible projects. */
+	ProjectOpsList(params project_ops.ProjectOpsListParams, principal *models.IdentityVerifyResp) middleware.Responder
 	ProjectOpsListPods(params project_ops.ProjectOpsListPodsParams, principal *models.IdentityVerifyResp) middleware.Responder
 	ProjectOpsListService(params project_ops.ProjectOpsListServiceParams, principal *models.IdentityVerifyResp) middleware.Responder
 	ProjectOpsSetService(params project_ops.ProjectOpsSetServiceParams, principal *models.IdentityVerifyResp) middleware.Responder
@@ -157,6 +159,9 @@ func configureAPI(api *operations.EzDeployApiserverAPI) http.Handler {
 	})
 	api.ProjectOpsProjectOpsGetServiceHandler = project_ops.ProjectOpsGetServiceHandlerFunc(func(params project_ops.ProjectOpsGetServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.ProjectOpsGetService(params, principal)
+	})
+	api.ProjectOpsProjectOpsListHandler = project_ops.ProjectOpsListHandlerFunc(func(params project_ops.ProjectOpsListParams, principal *models.IdentityVerifyResp) middleware.Responder {
+		return Impl.ProjectOpsList(params, principal)
 	})
 	api.ProjectOpsProjectOpsListPodsHandler = project_ops.ProjectOpsListPodsHandlerFunc(func(params project_ops.ProjectOpsListPodsParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.ProjectOpsListPods(params, principal)

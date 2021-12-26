@@ -223,6 +223,34 @@ func init() {
         }
       }
     },
+    "/project/list": {
+      "get": {
+        "tags": [
+          "ProjectOps"
+        ],
+        "summary": "list all visible projects.",
+        "operationId": "ProjectOps_List",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "$ref": "#/definitions/modelError"
+                },
+                "projects": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/project/service": {
       "post": {
         "tags": [
@@ -1358,6 +1386,34 @@ func init() {
             "description": "An unexpected error response.",
             "schema": {
               "$ref": "#/definitions/gatewayruntimeError"
+            }
+          }
+        }
+      }
+    },
+    "/project/list": {
+      "get": {
+        "tags": [
+          "ProjectOps"
+        ],
+        "summary": "list all visible projects.",
+        "operationId": "ProjectOps_List",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "$ref": "#/definitions/modelError"
+                },
+                "projects": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         }

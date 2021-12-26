@@ -95,6 +95,9 @@ func NewEzDeployApiserverAPI(spec *loads.Document) *EzDeployApiserverAPI {
 		ProjectOpsProjectOpsGetServiceHandler: project_ops.ProjectOpsGetServiceHandlerFunc(func(params project_ops.ProjectOpsGetServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation project_ops.ProjectOpsGetService has not yet been implemented")
 		}),
+		ProjectOpsProjectOpsListHandler: project_ops.ProjectOpsListHandlerFunc(func(params project_ops.ProjectOpsListParams, principal *models.IdentityVerifyResp) middleware.Responder {
+			return middleware.NotImplemented("operation project_ops.ProjectOpsList has not yet been implemented")
+		}),
 		ProjectOpsProjectOpsListPodsHandler: project_ops.ProjectOpsListPodsHandlerFunc(func(params project_ops.ProjectOpsListPodsParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation project_ops.ProjectOpsListPods has not yet been implemented")
 		}),
@@ -186,6 +189,8 @@ type EzDeployApiserverAPI struct {
 	ProjectOpsProjectOpsDeleteServiceHandler project_ops.ProjectOpsDeleteServiceHandler
 	// ProjectOpsProjectOpsGetServiceHandler sets the operation handler for the project ops get service operation
 	ProjectOpsProjectOpsGetServiceHandler project_ops.ProjectOpsGetServiceHandler
+	// ProjectOpsProjectOpsListHandler sets the operation handler for the project ops list operation
+	ProjectOpsProjectOpsListHandler project_ops.ProjectOpsListHandler
 	// ProjectOpsProjectOpsListPodsHandler sets the operation handler for the project ops list pods operation
 	ProjectOpsProjectOpsListPodsHandler project_ops.ProjectOpsListPodsHandler
 	// ProjectOpsProjectOpsListServiceHandler sets the operation handler for the project ops list service operation
@@ -320,6 +325,9 @@ func (o *EzDeployApiserverAPI) Validate() error {
 	}
 	if o.ProjectOpsProjectOpsGetServiceHandler == nil {
 		unregistered = append(unregistered, "project_ops.ProjectOpsGetServiceHandler")
+	}
+	if o.ProjectOpsProjectOpsListHandler == nil {
+		unregistered = append(unregistered, "project_ops.ProjectOpsListHandler")
 	}
 	if o.ProjectOpsProjectOpsListPodsHandler == nil {
 		unregistered = append(unregistered, "project_ops.ProjectOpsListPodsHandler")
@@ -493,6 +501,10 @@ func (o *EzDeployApiserverAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/project/service/get"] = project_ops.NewProjectOpsGetService(o.context, o.ProjectOpsProjectOpsGetServiceHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/project/list"] = project_ops.NewProjectOpsList(o.context, o.ProjectOpsProjectOpsListHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
