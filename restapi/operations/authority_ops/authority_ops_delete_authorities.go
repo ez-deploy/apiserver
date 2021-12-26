@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // AuthorityOpsDeleteAuthoritiesHandlerFunc turns a function with the right signature into a authority ops delete authorities handler
-type AuthorityOpsDeleteAuthoritiesHandlerFunc func(AuthorityOpsDeleteAuthoritiesParams, interface{}) middleware.Responder
+type AuthorityOpsDeleteAuthoritiesHandlerFunc func(AuthorityOpsDeleteAuthoritiesParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn AuthorityOpsDeleteAuthoritiesHandlerFunc) Handle(params AuthorityOpsDeleteAuthoritiesParams, principal interface{}) middleware.Responder {
+func (fn AuthorityOpsDeleteAuthoritiesHandlerFunc) Handle(params AuthorityOpsDeleteAuthoritiesParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // AuthorityOpsDeleteAuthoritiesHandler interface for that can handle valid authority ops delete authorities params
 type AuthorityOpsDeleteAuthoritiesHandler interface {
-	Handle(AuthorityOpsDeleteAuthoritiesParams, interface{}) middleware.Responder
+	Handle(AuthorityOpsDeleteAuthoritiesParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewAuthorityOpsDeleteAuthorities creates a new http.Handler for the authority ops delete authorities operation
@@ -53,9 +55,9 @@ func (o *AuthorityOpsDeleteAuthorities) ServeHTTP(rw http.ResponseWriter, r *htt
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

@@ -12,13 +12,14 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 
 	"github.com/ez-deploy/apiserver/handle"
+	"github.com/ez-deploy/apiserver/models"
 	"github.com/ez-deploy/apiserver/restapi/operations"
 	"github.com/ez-deploy/apiserver/restapi/operations/authority_ops"
 	"github.com/ez-deploy/apiserver/restapi/operations/identity_ops"
 	"github.com/ez-deploy/apiserver/restapi/operations/project_ops"
 )
 
-//go:generate swagger generate server --target ../../apiserver --name EzDeployApiserver --spec ../.swagger/swagger.yaml --implementation-package github.com/ez-deploy/apiserver/handle --principal interface{}
+//go:generate swagger generate server --target ../../apiserver --name EzDeployApiserver --spec ../.swagger/swagger.yaml --implementation-package github.com/ez-deploy/apiserver/handle --principal github.com/ez-deploy/apiserver/models.IdentityVerifyResp
 
 // This file auto configures the api backend implementation.
 // handle package must already exist.
@@ -48,46 +49,46 @@ type Configurable interface {
 // Authable handles server authentication
 type Authable interface {
 	// Applies when the "X-EZDEOPLY-APIKEY" header is set
-	KeyAuth(token string) (interface{}, error)
+	KeyAuth(token string) (*models.IdentityVerifyResp, error)
 }
 
 /* AuthorityOpsHandler  */
 type AuthorityOpsHandler interface {
-	AuthorityOpsDeleteAuthorities(params authority_ops.AuthorityOpsDeleteAuthoritiesParams, principal interface{}) middleware.Responder
-	AuthorityOpsListAuthoritiesByIdentity(params authority_ops.AuthorityOpsListAuthoritiesByIdentityParams, principal interface{}) middleware.Responder
-	AuthorityOpsListAuthoritiesByResource(params authority_ops.AuthorityOpsListAuthoritiesByResourceParams, principal interface{}) middleware.Responder
-	AuthorityOpsSetAuthorities(params authority_ops.AuthorityOpsSetAuthoritiesParams, principal interface{}) middleware.Responder
+	AuthorityOpsDeleteAuthorities(params authority_ops.AuthorityOpsDeleteAuthoritiesParams, principal *models.IdentityVerifyResp) middleware.Responder
+	AuthorityOpsListAuthoritiesByIdentity(params authority_ops.AuthorityOpsListAuthoritiesByIdentityParams, principal *models.IdentityVerifyResp) middleware.Responder
+	AuthorityOpsListAuthoritiesByResource(params authority_ops.AuthorityOpsListAuthoritiesByResourceParams, principal *models.IdentityVerifyResp) middleware.Responder
+	AuthorityOpsSetAuthorities(params authority_ops.AuthorityOpsSetAuthoritiesParams, principal *models.IdentityVerifyResp) middleware.Responder
 }
 
 /* IdentityOpsHandler  */
 type IdentityOpsHandler interface {
 	/* IdentityOpsDeletePublicToken delete public_token. */
-	IdentityOpsDeletePublicToken(params identity_ops.IdentityOpsDeletePublicTokenParams, principal interface{}) middleware.Responder
+	IdentityOpsDeletePublicToken(params identity_ops.IdentityOpsDeletePublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder
 	/* IdentityOpsGeneratePublicToken generate public_token. */
-	IdentityOpsGeneratePublicToken(params identity_ops.IdentityOpsGeneratePublicTokenParams, principal interface{}) middleware.Responder
+	IdentityOpsGeneratePublicToken(params identity_ops.IdentityOpsGeneratePublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder
 	/* IdentityOpsGetPrivateToken get private_token. */
-	IdentityOpsGetPrivateToken(params identity_ops.IdentityOpsGetPrivateTokenParams, principal interface{}) middleware.Responder
+	IdentityOpsGetPrivateToken(params identity_ops.IdentityOpsGetPrivateTokenParams, principal *models.IdentityVerifyResp) middleware.Responder
 	/* IdentityOpsListPublicToken list user's public_tokens. */
-	IdentityOpsListPublicToken(params identity_ops.IdentityOpsListPublicTokenParams, principal interface{}) middleware.Responder
+	IdentityOpsListPublicToken(params identity_ops.IdentityOpsListPublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder
 	/* IdentityOpsLogin Login by email and password. */
 	IdentityOpsLogin(params identity_ops.IdentityOpsLoginParams) middleware.Responder
 	/* IdentityOpsReGeneratePrivateToken generate private_token. */
-	IdentityOpsReGeneratePrivateToken(params identity_ops.IdentityOpsReGeneratePrivateTokenParams, principal interface{}) middleware.Responder
+	IdentityOpsReGeneratePrivateToken(params identity_ops.IdentityOpsReGeneratePrivateTokenParams, principal *models.IdentityVerifyResp) middleware.Responder
 	/* IdentityOpsRegister Register by email and password. */
 	IdentityOpsRegister(params identity_ops.IdentityOpsRegisterParams) middleware.Responder
 	/* IdentityOpsVerify Verify by session_token. */
-	IdentityOpsVerify(params identity_ops.IdentityOpsVerifyParams, principal interface{}) middleware.Responder
+	IdentityOpsVerify(params identity_ops.IdentityOpsVerifyParams, principal *models.IdentityVerifyResp) middleware.Responder
 }
 
 /* ProjectOpsHandler  */
 type ProjectOpsHandler interface {
-	ProjectOpsCreateProject(params project_ops.ProjectOpsCreateProjectParams, principal interface{}) middleware.Responder
-	ProjectOpsDeleteProject(params project_ops.ProjectOpsDeleteProjectParams, principal interface{}) middleware.Responder
-	ProjectOpsDeleteService(params project_ops.ProjectOpsDeleteServiceParams, principal interface{}) middleware.Responder
-	ProjectOpsGetService(params project_ops.ProjectOpsGetServiceParams, principal interface{}) middleware.Responder
-	ProjectOpsListPods(params project_ops.ProjectOpsListPodsParams, principal interface{}) middleware.Responder
-	ProjectOpsListService(params project_ops.ProjectOpsListServiceParams, principal interface{}) middleware.Responder
-	ProjectOpsSetService(params project_ops.ProjectOpsSetServiceParams, principal interface{}) middleware.Responder
+	ProjectOpsCreateProject(params project_ops.ProjectOpsCreateProjectParams, principal *models.IdentityVerifyResp) middleware.Responder
+	ProjectOpsDeleteProject(params project_ops.ProjectOpsDeleteProjectParams, principal *models.IdentityVerifyResp) middleware.Responder
+	ProjectOpsDeleteService(params project_ops.ProjectOpsDeleteServiceParams, principal *models.IdentityVerifyResp) middleware.Responder
+	ProjectOpsGetService(params project_ops.ProjectOpsGetServiceParams, principal *models.IdentityVerifyResp) middleware.Responder
+	ProjectOpsListPods(params project_ops.ProjectOpsListPodsParams, principal *models.IdentityVerifyResp) middleware.Responder
+	ProjectOpsListService(params project_ops.ProjectOpsListServiceParams, principal *models.IdentityVerifyResp) middleware.Responder
+	ProjectOpsSetService(params project_ops.ProjectOpsSetServiceParams, principal *models.IdentityVerifyResp) middleware.Responder
 }
 
 func configureFlags(api *operations.EzDeployApiserverAPI) {
@@ -105,65 +106,65 @@ func configureAPI(api *operations.EzDeployApiserverAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	// Applies when the "X-EZDEOPLY-APIKEY" header is set
-	api.KeyAuth = func(token string) (interface{}, error) {
+	api.KeyAuth = func(token string) (*models.IdentityVerifyResp, error) {
 		return Impl.KeyAuth(token)
 	}
 
-	api.AuthorityOpsAuthorityOpsDeleteAuthoritiesHandler = authority_ops.AuthorityOpsDeleteAuthoritiesHandlerFunc(func(params authority_ops.AuthorityOpsDeleteAuthoritiesParams, principal interface{}) middleware.Responder {
+	api.AuthorityOpsAuthorityOpsDeleteAuthoritiesHandler = authority_ops.AuthorityOpsDeleteAuthoritiesHandlerFunc(func(params authority_ops.AuthorityOpsDeleteAuthoritiesParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.AuthorityOpsDeleteAuthorities(params, principal)
 	})
-	api.AuthorityOpsAuthorityOpsListAuthoritiesByIdentityHandler = authority_ops.AuthorityOpsListAuthoritiesByIdentityHandlerFunc(func(params authority_ops.AuthorityOpsListAuthoritiesByIdentityParams, principal interface{}) middleware.Responder {
+	api.AuthorityOpsAuthorityOpsListAuthoritiesByIdentityHandler = authority_ops.AuthorityOpsListAuthoritiesByIdentityHandlerFunc(func(params authority_ops.AuthorityOpsListAuthoritiesByIdentityParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.AuthorityOpsListAuthoritiesByIdentity(params, principal)
 	})
-	api.AuthorityOpsAuthorityOpsListAuthoritiesByResourceHandler = authority_ops.AuthorityOpsListAuthoritiesByResourceHandlerFunc(func(params authority_ops.AuthorityOpsListAuthoritiesByResourceParams, principal interface{}) middleware.Responder {
+	api.AuthorityOpsAuthorityOpsListAuthoritiesByResourceHandler = authority_ops.AuthorityOpsListAuthoritiesByResourceHandlerFunc(func(params authority_ops.AuthorityOpsListAuthoritiesByResourceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.AuthorityOpsListAuthoritiesByResource(params, principal)
 	})
-	api.AuthorityOpsAuthorityOpsSetAuthoritiesHandler = authority_ops.AuthorityOpsSetAuthoritiesHandlerFunc(func(params authority_ops.AuthorityOpsSetAuthoritiesParams, principal interface{}) middleware.Responder {
+	api.AuthorityOpsAuthorityOpsSetAuthoritiesHandler = authority_ops.AuthorityOpsSetAuthoritiesHandlerFunc(func(params authority_ops.AuthorityOpsSetAuthoritiesParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.AuthorityOpsSetAuthorities(params, principal)
 	})
-	api.IdentityOpsIdentityOpsDeletePublicTokenHandler = identity_ops.IdentityOpsDeletePublicTokenHandlerFunc(func(params identity_ops.IdentityOpsDeletePublicTokenParams, principal interface{}) middleware.Responder {
+	api.IdentityOpsIdentityOpsDeletePublicTokenHandler = identity_ops.IdentityOpsDeletePublicTokenHandlerFunc(func(params identity_ops.IdentityOpsDeletePublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.IdentityOpsDeletePublicToken(params, principal)
 	})
-	api.IdentityOpsIdentityOpsGeneratePublicTokenHandler = identity_ops.IdentityOpsGeneratePublicTokenHandlerFunc(func(params identity_ops.IdentityOpsGeneratePublicTokenParams, principal interface{}) middleware.Responder {
+	api.IdentityOpsIdentityOpsGeneratePublicTokenHandler = identity_ops.IdentityOpsGeneratePublicTokenHandlerFunc(func(params identity_ops.IdentityOpsGeneratePublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.IdentityOpsGeneratePublicToken(params, principal)
 	})
-	api.IdentityOpsIdentityOpsGetPrivateTokenHandler = identity_ops.IdentityOpsGetPrivateTokenHandlerFunc(func(params identity_ops.IdentityOpsGetPrivateTokenParams, principal interface{}) middleware.Responder {
+	api.IdentityOpsIdentityOpsGetPrivateTokenHandler = identity_ops.IdentityOpsGetPrivateTokenHandlerFunc(func(params identity_ops.IdentityOpsGetPrivateTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.IdentityOpsGetPrivateToken(params, principal)
 	})
-	api.IdentityOpsIdentityOpsListPublicTokenHandler = identity_ops.IdentityOpsListPublicTokenHandlerFunc(func(params identity_ops.IdentityOpsListPublicTokenParams, principal interface{}) middleware.Responder {
+	api.IdentityOpsIdentityOpsListPublicTokenHandler = identity_ops.IdentityOpsListPublicTokenHandlerFunc(func(params identity_ops.IdentityOpsListPublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.IdentityOpsListPublicToken(params, principal)
 	})
 	api.IdentityOpsIdentityOpsLoginHandler = identity_ops.IdentityOpsLoginHandlerFunc(func(params identity_ops.IdentityOpsLoginParams) middleware.Responder {
 		return Impl.IdentityOpsLogin(params)
 	})
-	api.IdentityOpsIdentityOpsReGeneratePrivateTokenHandler = identity_ops.IdentityOpsReGeneratePrivateTokenHandlerFunc(func(params identity_ops.IdentityOpsReGeneratePrivateTokenParams, principal interface{}) middleware.Responder {
+	api.IdentityOpsIdentityOpsReGeneratePrivateTokenHandler = identity_ops.IdentityOpsReGeneratePrivateTokenHandlerFunc(func(params identity_ops.IdentityOpsReGeneratePrivateTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.IdentityOpsReGeneratePrivateToken(params, principal)
 	})
 	api.IdentityOpsIdentityOpsRegisterHandler = identity_ops.IdentityOpsRegisterHandlerFunc(func(params identity_ops.IdentityOpsRegisterParams) middleware.Responder {
 		return Impl.IdentityOpsRegister(params)
 	})
-	api.IdentityOpsIdentityOpsVerifyHandler = identity_ops.IdentityOpsVerifyHandlerFunc(func(params identity_ops.IdentityOpsVerifyParams, principal interface{}) middleware.Responder {
+	api.IdentityOpsIdentityOpsVerifyHandler = identity_ops.IdentityOpsVerifyHandlerFunc(func(params identity_ops.IdentityOpsVerifyParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.IdentityOpsVerify(params, principal)
 	})
-	api.ProjectOpsProjectOpsCreateProjectHandler = project_ops.ProjectOpsCreateProjectHandlerFunc(func(params project_ops.ProjectOpsCreateProjectParams, principal interface{}) middleware.Responder {
+	api.ProjectOpsProjectOpsCreateProjectHandler = project_ops.ProjectOpsCreateProjectHandlerFunc(func(params project_ops.ProjectOpsCreateProjectParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.ProjectOpsCreateProject(params, principal)
 	})
-	api.ProjectOpsProjectOpsDeleteProjectHandler = project_ops.ProjectOpsDeleteProjectHandlerFunc(func(params project_ops.ProjectOpsDeleteProjectParams, principal interface{}) middleware.Responder {
+	api.ProjectOpsProjectOpsDeleteProjectHandler = project_ops.ProjectOpsDeleteProjectHandlerFunc(func(params project_ops.ProjectOpsDeleteProjectParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.ProjectOpsDeleteProject(params, principal)
 	})
-	api.ProjectOpsProjectOpsDeleteServiceHandler = project_ops.ProjectOpsDeleteServiceHandlerFunc(func(params project_ops.ProjectOpsDeleteServiceParams, principal interface{}) middleware.Responder {
+	api.ProjectOpsProjectOpsDeleteServiceHandler = project_ops.ProjectOpsDeleteServiceHandlerFunc(func(params project_ops.ProjectOpsDeleteServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.ProjectOpsDeleteService(params, principal)
 	})
-	api.ProjectOpsProjectOpsGetServiceHandler = project_ops.ProjectOpsGetServiceHandlerFunc(func(params project_ops.ProjectOpsGetServiceParams, principal interface{}) middleware.Responder {
+	api.ProjectOpsProjectOpsGetServiceHandler = project_ops.ProjectOpsGetServiceHandlerFunc(func(params project_ops.ProjectOpsGetServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.ProjectOpsGetService(params, principal)
 	})
-	api.ProjectOpsProjectOpsListPodsHandler = project_ops.ProjectOpsListPodsHandlerFunc(func(params project_ops.ProjectOpsListPodsParams, principal interface{}) middleware.Responder {
+	api.ProjectOpsProjectOpsListPodsHandler = project_ops.ProjectOpsListPodsHandlerFunc(func(params project_ops.ProjectOpsListPodsParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.ProjectOpsListPods(params, principal)
 	})
-	api.ProjectOpsProjectOpsListServiceHandler = project_ops.ProjectOpsListServiceHandlerFunc(func(params project_ops.ProjectOpsListServiceParams, principal interface{}) middleware.Responder {
+	api.ProjectOpsProjectOpsListServiceHandler = project_ops.ProjectOpsListServiceHandlerFunc(func(params project_ops.ProjectOpsListServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.ProjectOpsListService(params, principal)
 	})
-	api.ProjectOpsProjectOpsSetServiceHandler = project_ops.ProjectOpsSetServiceHandlerFunc(func(params project_ops.ProjectOpsSetServiceParams, principal interface{}) middleware.Responder {
+	api.ProjectOpsProjectOpsSetServiceHandler = project_ops.ProjectOpsSetServiceHandlerFunc(func(params project_ops.ProjectOpsSetServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 		return Impl.ProjectOpsSetService(params, principal)
 	})
 

@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // AuthorityOpsSetAuthoritiesHandlerFunc turns a function with the right signature into a authority ops set authorities handler
-type AuthorityOpsSetAuthoritiesHandlerFunc func(AuthorityOpsSetAuthoritiesParams, interface{}) middleware.Responder
+type AuthorityOpsSetAuthoritiesHandlerFunc func(AuthorityOpsSetAuthoritiesParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn AuthorityOpsSetAuthoritiesHandlerFunc) Handle(params AuthorityOpsSetAuthoritiesParams, principal interface{}) middleware.Responder {
+func (fn AuthorityOpsSetAuthoritiesHandlerFunc) Handle(params AuthorityOpsSetAuthoritiesParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // AuthorityOpsSetAuthoritiesHandler interface for that can handle valid authority ops set authorities params
 type AuthorityOpsSetAuthoritiesHandler interface {
-	Handle(AuthorityOpsSetAuthoritiesParams, interface{}) middleware.Responder
+	Handle(AuthorityOpsSetAuthoritiesParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewAuthorityOpsSetAuthorities creates a new http.Handler for the authority ops set authorities operation
@@ -53,9 +55,9 @@ func (o *AuthorityOpsSetAuthorities) ServeHTTP(rw http.ResponseWriter, r *http.R
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

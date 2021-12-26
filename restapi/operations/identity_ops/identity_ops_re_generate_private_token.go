@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // IdentityOpsReGeneratePrivateTokenHandlerFunc turns a function with the right signature into a identity ops re generate private token handler
-type IdentityOpsReGeneratePrivateTokenHandlerFunc func(IdentityOpsReGeneratePrivateTokenParams, interface{}) middleware.Responder
+type IdentityOpsReGeneratePrivateTokenHandlerFunc func(IdentityOpsReGeneratePrivateTokenParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn IdentityOpsReGeneratePrivateTokenHandlerFunc) Handle(params IdentityOpsReGeneratePrivateTokenParams, principal interface{}) middleware.Responder {
+func (fn IdentityOpsReGeneratePrivateTokenHandlerFunc) Handle(params IdentityOpsReGeneratePrivateTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // IdentityOpsReGeneratePrivateTokenHandler interface for that can handle valid identity ops re generate private token params
 type IdentityOpsReGeneratePrivateTokenHandler interface {
-	Handle(IdentityOpsReGeneratePrivateTokenParams, interface{}) middleware.Responder
+	Handle(IdentityOpsReGeneratePrivateTokenParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewIdentityOpsReGeneratePrivateToken creates a new http.Handler for the identity ops re generate private token operation
@@ -53,9 +55,9 @@ func (o *IdentityOpsReGeneratePrivateToken) ServeHTTP(rw http.ResponseWriter, r 
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

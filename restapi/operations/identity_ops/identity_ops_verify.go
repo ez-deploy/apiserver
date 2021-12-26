@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // IdentityOpsVerifyHandlerFunc turns a function with the right signature into a identity ops verify handler
-type IdentityOpsVerifyHandlerFunc func(IdentityOpsVerifyParams, interface{}) middleware.Responder
+type IdentityOpsVerifyHandlerFunc func(IdentityOpsVerifyParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn IdentityOpsVerifyHandlerFunc) Handle(params IdentityOpsVerifyParams, principal interface{}) middleware.Responder {
+func (fn IdentityOpsVerifyHandlerFunc) Handle(params IdentityOpsVerifyParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // IdentityOpsVerifyHandler interface for that can handle valid identity ops verify params
 type IdentityOpsVerifyHandler interface {
-	Handle(IdentityOpsVerifyParams, interface{}) middleware.Responder
+	Handle(IdentityOpsVerifyParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewIdentityOpsVerify creates a new http.Handler for the identity ops verify operation
@@ -53,9 +55,9 @@ func (o *IdentityOpsVerify) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

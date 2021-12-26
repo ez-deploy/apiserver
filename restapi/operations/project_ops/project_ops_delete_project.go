@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // ProjectOpsDeleteProjectHandlerFunc turns a function with the right signature into a project ops delete project handler
-type ProjectOpsDeleteProjectHandlerFunc func(ProjectOpsDeleteProjectParams, interface{}) middleware.Responder
+type ProjectOpsDeleteProjectHandlerFunc func(ProjectOpsDeleteProjectParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn ProjectOpsDeleteProjectHandlerFunc) Handle(params ProjectOpsDeleteProjectParams, principal interface{}) middleware.Responder {
+func (fn ProjectOpsDeleteProjectHandlerFunc) Handle(params ProjectOpsDeleteProjectParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // ProjectOpsDeleteProjectHandler interface for that can handle valid project ops delete project params
 type ProjectOpsDeleteProjectHandler interface {
-	Handle(ProjectOpsDeleteProjectParams, interface{}) middleware.Responder
+	Handle(ProjectOpsDeleteProjectParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewProjectOpsDeleteProject creates a new http.Handler for the project ops delete project operation
@@ -53,9 +55,9 @@ func (o *ProjectOpsDeleteProject) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

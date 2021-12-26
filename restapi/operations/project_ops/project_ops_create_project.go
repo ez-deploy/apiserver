@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // ProjectOpsCreateProjectHandlerFunc turns a function with the right signature into a project ops create project handler
-type ProjectOpsCreateProjectHandlerFunc func(ProjectOpsCreateProjectParams, interface{}) middleware.Responder
+type ProjectOpsCreateProjectHandlerFunc func(ProjectOpsCreateProjectParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn ProjectOpsCreateProjectHandlerFunc) Handle(params ProjectOpsCreateProjectParams, principal interface{}) middleware.Responder {
+func (fn ProjectOpsCreateProjectHandlerFunc) Handle(params ProjectOpsCreateProjectParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // ProjectOpsCreateProjectHandler interface for that can handle valid project ops create project params
 type ProjectOpsCreateProjectHandler interface {
-	Handle(ProjectOpsCreateProjectParams, interface{}) middleware.Responder
+	Handle(ProjectOpsCreateProjectParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewProjectOpsCreateProject creates a new http.Handler for the project ops create project operation
@@ -53,9 +55,9 @@ func (o *ProjectOpsCreateProject) ServeHTTP(rw http.ResponseWriter, r *http.Requ
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

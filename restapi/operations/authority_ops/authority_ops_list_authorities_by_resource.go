@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // AuthorityOpsListAuthoritiesByResourceHandlerFunc turns a function with the right signature into a authority ops list authorities by resource handler
-type AuthorityOpsListAuthoritiesByResourceHandlerFunc func(AuthorityOpsListAuthoritiesByResourceParams, interface{}) middleware.Responder
+type AuthorityOpsListAuthoritiesByResourceHandlerFunc func(AuthorityOpsListAuthoritiesByResourceParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn AuthorityOpsListAuthoritiesByResourceHandlerFunc) Handle(params AuthorityOpsListAuthoritiesByResourceParams, principal interface{}) middleware.Responder {
+func (fn AuthorityOpsListAuthoritiesByResourceHandlerFunc) Handle(params AuthorityOpsListAuthoritiesByResourceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // AuthorityOpsListAuthoritiesByResourceHandler interface for that can handle valid authority ops list authorities by resource params
 type AuthorityOpsListAuthoritiesByResourceHandler interface {
-	Handle(AuthorityOpsListAuthoritiesByResourceParams, interface{}) middleware.Responder
+	Handle(AuthorityOpsListAuthoritiesByResourceParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewAuthorityOpsListAuthoritiesByResource creates a new http.Handler for the authority ops list authorities by resource operation
@@ -53,9 +55,9 @@ func (o *AuthorityOpsListAuthoritiesByResource) ServeHTTP(rw http.ResponseWriter
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

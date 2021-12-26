@@ -9,7 +9,10 @@ gen_swagger:
 	@./.scripts/gen_swagger.sh ${PROTO_REPO} ./gen
 
 gen_server:
-	@swagger generate server --implementation-package=${GO_MOD_NAME}/handle -f ./.swagger/swagger.yaml
+	@swagger generate server \
+		--implementation-package=${GO_MOD_NAME}/handle \
+		--principal=github.com/ez-deploy/apiserver/models.IdentityVerifyResp \
+		-f ./.swagger/swagger.yaml
 	@go mod tidy
 
 clean: clean_server clean_swagger

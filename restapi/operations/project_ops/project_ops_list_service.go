@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // ProjectOpsListServiceHandlerFunc turns a function with the right signature into a project ops list service handler
-type ProjectOpsListServiceHandlerFunc func(ProjectOpsListServiceParams, interface{}) middleware.Responder
+type ProjectOpsListServiceHandlerFunc func(ProjectOpsListServiceParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn ProjectOpsListServiceHandlerFunc) Handle(params ProjectOpsListServiceParams, principal interface{}) middleware.Responder {
+func (fn ProjectOpsListServiceHandlerFunc) Handle(params ProjectOpsListServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // ProjectOpsListServiceHandler interface for that can handle valid project ops list service params
 type ProjectOpsListServiceHandler interface {
-	Handle(ProjectOpsListServiceParams, interface{}) middleware.Responder
+	Handle(ProjectOpsListServiceParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewProjectOpsListService creates a new http.Handler for the project ops list service operation
@@ -53,9 +55,9 @@ func (o *ProjectOpsListService) ServeHTTP(rw http.ResponseWriter, r *http.Reques
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

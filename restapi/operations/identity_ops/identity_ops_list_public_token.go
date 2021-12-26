@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // IdentityOpsListPublicTokenHandlerFunc turns a function with the right signature into a identity ops list public token handler
-type IdentityOpsListPublicTokenHandlerFunc func(IdentityOpsListPublicTokenParams, interface{}) middleware.Responder
+type IdentityOpsListPublicTokenHandlerFunc func(IdentityOpsListPublicTokenParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn IdentityOpsListPublicTokenHandlerFunc) Handle(params IdentityOpsListPublicTokenParams, principal interface{}) middleware.Responder {
+func (fn IdentityOpsListPublicTokenHandlerFunc) Handle(params IdentityOpsListPublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // IdentityOpsListPublicTokenHandler interface for that can handle valid identity ops list public token params
 type IdentityOpsListPublicTokenHandler interface {
-	Handle(IdentityOpsListPublicTokenParams, interface{}) middleware.Responder
+	Handle(IdentityOpsListPublicTokenParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewIdentityOpsListPublicToken creates a new http.Handler for the identity ops list public token operation
@@ -53,9 +55,9 @@ func (o *IdentityOpsListPublicToken) ServeHTTP(rw http.ResponseWriter, r *http.R
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

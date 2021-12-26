@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // IdentityOpsDeletePublicTokenHandlerFunc turns a function with the right signature into a identity ops delete public token handler
-type IdentityOpsDeletePublicTokenHandlerFunc func(IdentityOpsDeletePublicTokenParams, interface{}) middleware.Responder
+type IdentityOpsDeletePublicTokenHandlerFunc func(IdentityOpsDeletePublicTokenParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn IdentityOpsDeletePublicTokenHandlerFunc) Handle(params IdentityOpsDeletePublicTokenParams, principal interface{}) middleware.Responder {
+func (fn IdentityOpsDeletePublicTokenHandlerFunc) Handle(params IdentityOpsDeletePublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // IdentityOpsDeletePublicTokenHandler interface for that can handle valid identity ops delete public token params
 type IdentityOpsDeletePublicTokenHandler interface {
-	Handle(IdentityOpsDeletePublicTokenParams, interface{}) middleware.Responder
+	Handle(IdentityOpsDeletePublicTokenParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewIdentityOpsDeletePublicToken creates a new http.Handler for the identity ops delete public token operation
@@ -53,9 +55,9 @@ func (o *IdentityOpsDeletePublicToken) ServeHTTP(rw http.ResponseWriter, r *http
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params

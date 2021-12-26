@@ -1,0 +1,2 @@
+grpc_identity_host: "localhost"
+grpc_identity_port: "8080"

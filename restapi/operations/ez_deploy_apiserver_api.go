@@ -19,6 +19,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
+	"github.com/ez-deploy/apiserver/models"
 	"github.com/ez-deploy/apiserver/restapi/operations/authority_ops"
 	"github.com/ez-deploy/apiserver/restapi/operations/identity_ops"
 	"github.com/ez-deploy/apiserver/restapi/operations/project_ops"
@@ -46,66 +47,66 @@ func NewEzDeployApiserverAPI(spec *loads.Document) *EzDeployApiserverAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		AuthorityOpsAuthorityOpsDeleteAuthoritiesHandler: authority_ops.AuthorityOpsDeleteAuthoritiesHandlerFunc(func(params authority_ops.AuthorityOpsDeleteAuthoritiesParams, principal interface{}) middleware.Responder {
+		AuthorityOpsAuthorityOpsDeleteAuthoritiesHandler: authority_ops.AuthorityOpsDeleteAuthoritiesHandlerFunc(func(params authority_ops.AuthorityOpsDeleteAuthoritiesParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation authority_ops.AuthorityOpsDeleteAuthorities has not yet been implemented")
 		}),
-		AuthorityOpsAuthorityOpsListAuthoritiesByIdentityHandler: authority_ops.AuthorityOpsListAuthoritiesByIdentityHandlerFunc(func(params authority_ops.AuthorityOpsListAuthoritiesByIdentityParams, principal interface{}) middleware.Responder {
+		AuthorityOpsAuthorityOpsListAuthoritiesByIdentityHandler: authority_ops.AuthorityOpsListAuthoritiesByIdentityHandlerFunc(func(params authority_ops.AuthorityOpsListAuthoritiesByIdentityParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation authority_ops.AuthorityOpsListAuthoritiesByIdentity has not yet been implemented")
 		}),
-		AuthorityOpsAuthorityOpsListAuthoritiesByResourceHandler: authority_ops.AuthorityOpsListAuthoritiesByResourceHandlerFunc(func(params authority_ops.AuthorityOpsListAuthoritiesByResourceParams, principal interface{}) middleware.Responder {
+		AuthorityOpsAuthorityOpsListAuthoritiesByResourceHandler: authority_ops.AuthorityOpsListAuthoritiesByResourceHandlerFunc(func(params authority_ops.AuthorityOpsListAuthoritiesByResourceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation authority_ops.AuthorityOpsListAuthoritiesByResource has not yet been implemented")
 		}),
-		AuthorityOpsAuthorityOpsSetAuthoritiesHandler: authority_ops.AuthorityOpsSetAuthoritiesHandlerFunc(func(params authority_ops.AuthorityOpsSetAuthoritiesParams, principal interface{}) middleware.Responder {
+		AuthorityOpsAuthorityOpsSetAuthoritiesHandler: authority_ops.AuthorityOpsSetAuthoritiesHandlerFunc(func(params authority_ops.AuthorityOpsSetAuthoritiesParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation authority_ops.AuthorityOpsSetAuthorities has not yet been implemented")
 		}),
-		IdentityOpsIdentityOpsDeletePublicTokenHandler: identity_ops.IdentityOpsDeletePublicTokenHandlerFunc(func(params identity_ops.IdentityOpsDeletePublicTokenParams, principal interface{}) middleware.Responder {
+		IdentityOpsIdentityOpsDeletePublicTokenHandler: identity_ops.IdentityOpsDeletePublicTokenHandlerFunc(func(params identity_ops.IdentityOpsDeletePublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation identity_ops.IdentityOpsDeletePublicToken has not yet been implemented")
 		}),
-		IdentityOpsIdentityOpsGeneratePublicTokenHandler: identity_ops.IdentityOpsGeneratePublicTokenHandlerFunc(func(params identity_ops.IdentityOpsGeneratePublicTokenParams, principal interface{}) middleware.Responder {
+		IdentityOpsIdentityOpsGeneratePublicTokenHandler: identity_ops.IdentityOpsGeneratePublicTokenHandlerFunc(func(params identity_ops.IdentityOpsGeneratePublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation identity_ops.IdentityOpsGeneratePublicToken has not yet been implemented")
 		}),
-		IdentityOpsIdentityOpsGetPrivateTokenHandler: identity_ops.IdentityOpsGetPrivateTokenHandlerFunc(func(params identity_ops.IdentityOpsGetPrivateTokenParams, principal interface{}) middleware.Responder {
+		IdentityOpsIdentityOpsGetPrivateTokenHandler: identity_ops.IdentityOpsGetPrivateTokenHandlerFunc(func(params identity_ops.IdentityOpsGetPrivateTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation identity_ops.IdentityOpsGetPrivateToken has not yet been implemented")
 		}),
-		IdentityOpsIdentityOpsListPublicTokenHandler: identity_ops.IdentityOpsListPublicTokenHandlerFunc(func(params identity_ops.IdentityOpsListPublicTokenParams, principal interface{}) middleware.Responder {
+		IdentityOpsIdentityOpsListPublicTokenHandler: identity_ops.IdentityOpsListPublicTokenHandlerFunc(func(params identity_ops.IdentityOpsListPublicTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation identity_ops.IdentityOpsListPublicToken has not yet been implemented")
 		}),
 		IdentityOpsIdentityOpsLoginHandler: identity_ops.IdentityOpsLoginHandlerFunc(func(params identity_ops.IdentityOpsLoginParams) middleware.Responder {
 			return middleware.NotImplemented("operation identity_ops.IdentityOpsLogin has not yet been implemented")
 		}),
-		IdentityOpsIdentityOpsReGeneratePrivateTokenHandler: identity_ops.IdentityOpsReGeneratePrivateTokenHandlerFunc(func(params identity_ops.IdentityOpsReGeneratePrivateTokenParams, principal interface{}) middleware.Responder {
+		IdentityOpsIdentityOpsReGeneratePrivateTokenHandler: identity_ops.IdentityOpsReGeneratePrivateTokenHandlerFunc(func(params identity_ops.IdentityOpsReGeneratePrivateTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation identity_ops.IdentityOpsReGeneratePrivateToken has not yet been implemented")
 		}),
 		IdentityOpsIdentityOpsRegisterHandler: identity_ops.IdentityOpsRegisterHandlerFunc(func(params identity_ops.IdentityOpsRegisterParams) middleware.Responder {
 			return middleware.NotImplemented("operation identity_ops.IdentityOpsRegister has not yet been implemented")
 		}),
-		IdentityOpsIdentityOpsVerifyHandler: identity_ops.IdentityOpsVerifyHandlerFunc(func(params identity_ops.IdentityOpsVerifyParams, principal interface{}) middleware.Responder {
+		IdentityOpsIdentityOpsVerifyHandler: identity_ops.IdentityOpsVerifyHandlerFunc(func(params identity_ops.IdentityOpsVerifyParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation identity_ops.IdentityOpsVerify has not yet been implemented")
 		}),
-		ProjectOpsProjectOpsCreateProjectHandler: project_ops.ProjectOpsCreateProjectHandlerFunc(func(params project_ops.ProjectOpsCreateProjectParams, principal interface{}) middleware.Responder {
+		ProjectOpsProjectOpsCreateProjectHandler: project_ops.ProjectOpsCreateProjectHandlerFunc(func(params project_ops.ProjectOpsCreateProjectParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation project_ops.ProjectOpsCreateProject has not yet been implemented")
 		}),
-		ProjectOpsProjectOpsDeleteProjectHandler: project_ops.ProjectOpsDeleteProjectHandlerFunc(func(params project_ops.ProjectOpsDeleteProjectParams, principal interface{}) middleware.Responder {
+		ProjectOpsProjectOpsDeleteProjectHandler: project_ops.ProjectOpsDeleteProjectHandlerFunc(func(params project_ops.ProjectOpsDeleteProjectParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation project_ops.ProjectOpsDeleteProject has not yet been implemented")
 		}),
-		ProjectOpsProjectOpsDeleteServiceHandler: project_ops.ProjectOpsDeleteServiceHandlerFunc(func(params project_ops.ProjectOpsDeleteServiceParams, principal interface{}) middleware.Responder {
+		ProjectOpsProjectOpsDeleteServiceHandler: project_ops.ProjectOpsDeleteServiceHandlerFunc(func(params project_ops.ProjectOpsDeleteServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation project_ops.ProjectOpsDeleteService has not yet been implemented")
 		}),
-		ProjectOpsProjectOpsGetServiceHandler: project_ops.ProjectOpsGetServiceHandlerFunc(func(params project_ops.ProjectOpsGetServiceParams, principal interface{}) middleware.Responder {
+		ProjectOpsProjectOpsGetServiceHandler: project_ops.ProjectOpsGetServiceHandlerFunc(func(params project_ops.ProjectOpsGetServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation project_ops.ProjectOpsGetService has not yet been implemented")
 		}),
-		ProjectOpsProjectOpsListPodsHandler: project_ops.ProjectOpsListPodsHandlerFunc(func(params project_ops.ProjectOpsListPodsParams, principal interface{}) middleware.Responder {
+		ProjectOpsProjectOpsListPodsHandler: project_ops.ProjectOpsListPodsHandlerFunc(func(params project_ops.ProjectOpsListPodsParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation project_ops.ProjectOpsListPods has not yet been implemented")
 		}),
-		ProjectOpsProjectOpsListServiceHandler: project_ops.ProjectOpsListServiceHandlerFunc(func(params project_ops.ProjectOpsListServiceParams, principal interface{}) middleware.Responder {
+		ProjectOpsProjectOpsListServiceHandler: project_ops.ProjectOpsListServiceHandlerFunc(func(params project_ops.ProjectOpsListServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation project_ops.ProjectOpsListService has not yet been implemented")
 		}),
-		ProjectOpsProjectOpsSetServiceHandler: project_ops.ProjectOpsSetServiceHandlerFunc(func(params project_ops.ProjectOpsSetServiceParams, principal interface{}) middleware.Responder {
+		ProjectOpsProjectOpsSetServiceHandler: project_ops.ProjectOpsSetServiceHandlerFunc(func(params project_ops.ProjectOpsSetServiceParams, principal *models.IdentityVerifyResp) middleware.Responder {
 			return middleware.NotImplemented("operation project_ops.ProjectOpsSetService has not yet been implemented")
 		}),
 
 		// Applies when the "X-EZDEOPLY-APIKEY" header is set
-		KeyAuth: func(token string) (interface{}, error) {
+		KeyAuth: func(token string) (*models.IdentityVerifyResp, error) {
 			return nil, errors.NotImplemented("api key auth (key) X-EZDEOPLY-APIKEY from header param [X-EZDEOPLY-APIKEY] has not yet been implemented")
 		},
 		// default authorizer is authorized meaning no requests are blocked
@@ -148,7 +149,7 @@ type EzDeployApiserverAPI struct {
 
 	// KeyAuth registers a function that takes a token and returns a principal
 	// it performs authentication based on an api key X-EZDEOPLY-APIKEY provided in the header
-	KeyAuth func(string) (interface{}, error)
+	KeyAuth func(string) (*models.IdentityVerifyResp, error)
 
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
 	APIAuthorizer runtime.Authorizer
@@ -349,7 +350,9 @@ func (o *EzDeployApiserverAPI) AuthenticatorsFor(schemes map[string]spec.Securit
 		switch name {
 		case "key":
 			scheme := schemes[name]
-			result[name] = o.APIKeyAuthenticator(scheme.Name, scheme.In, o.KeyAuth)
+			result[name] = o.APIKeyAuthenticator(scheme.Name, scheme.In, func(token string) (interface{}, error) {
+				return o.KeyAuth(token)
+			})
 
 		}
 	}

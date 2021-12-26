@@ -9,19 +9,21 @@ import (
 	"net/http"
 
 	"github.com/go-openapi/runtime/middleware"
+
+	"github.com/ez-deploy/apiserver/models"
 )
 
 // IdentityOpsGetPrivateTokenHandlerFunc turns a function with the right signature into a identity ops get private token handler
-type IdentityOpsGetPrivateTokenHandlerFunc func(IdentityOpsGetPrivateTokenParams, interface{}) middleware.Responder
+type IdentityOpsGetPrivateTokenHandlerFunc func(IdentityOpsGetPrivateTokenParams, *models.IdentityVerifyResp) middleware.Responder
 
 // Handle executing the request and returning a response
-func (fn IdentityOpsGetPrivateTokenHandlerFunc) Handle(params IdentityOpsGetPrivateTokenParams, principal interface{}) middleware.Responder {
+func (fn IdentityOpsGetPrivateTokenHandlerFunc) Handle(params IdentityOpsGetPrivateTokenParams, principal *models.IdentityVerifyResp) middleware.Responder {
 	return fn(params, principal)
 }
 
 // IdentityOpsGetPrivateTokenHandler interface for that can handle valid identity ops get private token params
 type IdentityOpsGetPrivateTokenHandler interface {
-	Handle(IdentityOpsGetPrivateTokenParams, interface{}) middleware.Responder
+	Handle(IdentityOpsGetPrivateTokenParams, *models.IdentityVerifyResp) middleware.Responder
 }
 
 // NewIdentityOpsGetPrivateToken creates a new http.Handler for the identity ops get private token operation
@@ -53,9 +55,9 @@ func (o *IdentityOpsGetPrivateToken) ServeHTTP(rw http.ResponseWriter, r *http.R
 	if aCtx != nil {
 		*r = *aCtx
 	}
-	var principal interface{}
+	var principal *models.IdentityVerifyResp
 	if uprinc != nil {
-		principal = uprinc.(interface{}) // this is really a interface{}, I promise
+		principal = uprinc.(*models.IdentityVerifyResp) // this is really a models.IdentityVerifyResp, I promise
 	}
 
 	if err := o.Context.BindValidRequest(r, route, &Params); err != nil { // bind params
