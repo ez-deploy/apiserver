@@ -22,10 +22,26 @@ func createGRPCClientsFromConfig(cfg *config) (*grpcClientSet, error) {
 		return nil, err
 	}
 
+	projectAddr := fmt.Sprintf("%v:%v", cfg.GRPCProjectHost, cfg.GRPCProjectPort)
+	projectConn, err := grpc.Dial(projectAddr, grpc.WithInsecure())
+	if err != nil {
+		return nil, err
+	}
+
+	authorityAddr := fmt.Sprintf("%v:%v", cfg.GRPCAuthorityHost, cfg.GRPCAuthorityPort)
+	authorityConn, err := grpc.Dial(authorityAddr, grpc.WithInsecure())
+	if err != nil {
+		return nil, err
+	}
+
 	identityClient := identitypb.NewIdentityOpsClient(identityConn)
+	projectClient := projectpb.NewProjectOpsClient(projectConn)
+	authorityClient := authoritypb.NewAuthorityOpsClient(authorityConn)
 
 	clientset := &grpcClientSet{
-		identityClient: identityClient,
+		identityClient:  identityClient,
+		projectClient:   projectClient,
+		authorityClient: authorityClient,
 	}
 
 	return clientset, nil

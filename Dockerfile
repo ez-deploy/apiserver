@@ -5,6 +5,7 @@ COPY . .
 
 RUN go env -w GO111MODULE=on && \
     go env -w GOPROXY=https://goproxy.io && \
+    go mod tidy && \
     CGO_ENABLED=0 go build -tags netgo -o apiserver ./cmd/ez-deploy-apiserver-server/main.go
 
 FROM busybox

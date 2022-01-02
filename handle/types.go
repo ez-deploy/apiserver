@@ -35,6 +35,6 @@ func New() *handlerImpl {
 		AuthableImpl:     identity.NewAuthableImpl(clientset.identityClient),
 		IdentityOpsImpl:  identity.NewIdentityOpsImpl(clientset.identityClient),
 		AuthorityOpsImpl: &authority.AuthorityOpsImpl{},
-		ProjectOpsImpl:   &project.ProjectOpsImpl{},
+		ProjectOpsImpl:   project.New(clientset.authorityClient, clientset.projectClient),
 	}
 }
